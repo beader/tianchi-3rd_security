@@ -168,7 +168,8 @@ $ python predict.py
 
 但实际上，logloss 公式应该是:
 
-![4](http://orxuqm7p7.bkt.clouddn.com/4.png?imageView2/2/h/70)
+![4](http://orxuqm7p7.bkt.clouddn.com/2018-08-30-4.png?imageView2/2/h/70)
+
 
 参考 [fast.ai wiki - logloss](http://wiki.fast.ai/index.php/Log_Loss)
 
