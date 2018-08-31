@@ -97,7 +97,7 @@ $ unzip -p 3rd_security_test.zip | tail -n +2 | cut -f 1 -d, | uniq | wc -l
 
 ## 赛题理解
 
-假设某个文件有以下的 api 调用顺序，采集精读为10ms，这里忽略  api 的 return value
+假设某个文件有以下的 api 调用顺序，采集精度为10ms，这里忽略  api 的 return value
 
 ```bash
 index                   0   1   2       3   4   5           6   7
@@ -127,34 +127,6 @@ b	1002	7
 f	1003	0
 f	1003	3
 f	1003	6
-```
-
-## 使用方法
-
-将数据文件放入 `./data` 目录下
-
-将原始数据的 api 转换成数字，并在每个文件内按照全局 index 进行排序
-
-```bash
-$ python preprocess_scripts/encode_api.py
-```
-
-为每个文件生成 api sequence，并存储为 pickle
-
-```bash
-$ python preprocess_scripts/gen_api_seqs.py
-```
-
-训练
-
-```bash
-$ python train.py
-```
-
-预测
-
-```bash
-$ python predict.py
 ```
 
 ## 评测指标
@@ -229,10 +201,37 @@ word    I like this movie very much !
 ### 训练过程
 考虑到 class 0 的样本占据了大多数，并且较难的部分其实是 class 1 ~ class 5 之间的分类问题。因此在每一个 epoch 中，我们随机抽取一部分 class 0 的样本，其余 class 保持固定。
 
+## 使用方法
+
+将数据文件放入 `./data` 目录下
+
+将原始数据的 api 转换成数字，并在每个文件内按照全局 index 进行排序
+
+```bash
+$ python preprocess_scripts/encode_api.py
+```
+
+为每个文件生成 api sequence，并存储为 pickle
+
+```bash
+$ python preprocess_scripts/gen_api_seqs.py
+```
+
+训练
+
+```bash
+$ python train.py
+```
+
+预测
+
+```bash
+$ python predict.py
+```
+
 ## 后续的一些反思
 
 1. 关于评分标准，按照阿里云说明文档中，按照 logloss 进行评估，但给出的公式并不是 logloss 的公式，有可能出现的情况是，官方按照自己的那个公式做评分，而训练时的 loss 是按照 logloss 去做最优化的，这里可能会吃亏。
 2. 这次比赛并没有尝试普通的Random Forest或者GBDT去做，直接用了一个最简单的 CNN 去做，我觉得这个 baseline model 的 performance 还凑合，毕竟这里面没有任何的人工特征工程在里面。在初赛阶段大约能达到 0.09+，后续如果优化网络结构以及做一些fine-tune，也许有一定的潜力。
 3. 这里简单使用了 one-hot encoding，因为还没有想到一个学习 embedding 的一个好方法，因为和文本不一样，这种类型的 sequence 中每个 element 是一个 set。
-
 
