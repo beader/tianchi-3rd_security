@@ -63,23 +63,20 @@ file_id,label,api,tid,return_value,index
 # 训练集行数
 $ unzip -p 3rd_security_train.zip | wc -l
 409631050
- 
- 
+
 # 训练集文件数
-$ unzip -p 3rd_security_train.zip | tail -n +2 train.csv | cut -f 1 -d, | uniq | wc -l
+$ unzip -p 3rd_security_train.zip | tail -n +2 | cut -f 1 -d, | uniq | wc -l
 116624
- 
- 
+
 # label 的分布情况
-$ unzip -p 3rd_security_train.zip | tail -n +2 train.csv | cut -f 1,2 -d, | uniq | cut -f 2 -d, | sort | uniq -c
+$ unzip -p 3rd_security_train.zip | tail -n +2 | cut -f 1,2 -d, | uniq | cut -f 2 -d, | sort | uniq -c
  111545 0
     287 1
     744 2
     598 3
      53 4
    3397 5
- 
- 
+
 # 测试集文件数
 $ unzip -p 3rd_security_test.zip | tail -n +2 | cut -f 1 -d, | uniq | wc -l
 53093
@@ -148,7 +145,7 @@ $ python preprocess_scripts/encode_api.py
 $ python preprocess_scripts/gen_api_seqs.py
 ```
 
-训练 
+训练
 
 ```bash
 $ python train.py
