@@ -214,10 +214,10 @@ word    I like this movie very much !
 
 ```bash
 $ unzip -p ./data/3rd_security_train.zip | python encode_values.py -c api --vocab-file value_mappings.csv \
-    | python to_tfrecords.py -o train:0.8 valid:0.2 --with-label --compress
+    | python to_tfrecords.py -o train:0.8 valid:0.2 --with-label --compress --verbose
 
 $ unzip -p ./data/3rd_security_test.zip | python encode_values.py -c api --vocab-file value_mappings.csv \
-    | python to_tfrecords.py -o test --compress
+    | python to_tfrecords.py -o test --compress --verbose
 ```
 
 训练
