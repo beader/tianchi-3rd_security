@@ -1,4 +1,5 @@
 .DS_Store
+logs
 .idea
 *.pyc
 data

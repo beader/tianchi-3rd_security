@@ -2,6 +2,12 @@
 
 [竞赛链接](https://tianchi.aliyun.com/competition/introduction.htm?raceId=231668)
 
+这个版本相对于 [v0.1](https://github.com/beader/3rd_security/tree/v0.1)，训练逻辑和效果不变，但做了一些优化:
+
+- 使用 Tensorflow TFRecord 格式存储原始数据
+- 中间步骤的脚本支持管道操作, 具体可以查看脚本的 --help
+- 训练部分使用 TFRecord，训练速度更快，占用内存变少
+
 ## 背景
 
 此竞赛是阿里云举办的第三届安全算法挑战赛，这一次竞赛的主题是恶意文件分类。
@@ -205,28 +211,25 @@ word    I like this movie very much !
 
 将数据文件放入 `./data` 目录下
 
-将原始数据的 api 转换成数字，并在每个文件内按照全局 index 进行排序
 
 ```bash
-$ python preprocess_scripts/encode_api.py
-```
+$ unzip -p ./data/3rd_security_train.zip | python encode_values.py -c api --vocab-file value_mappings.csv \
+    | python to_tfrecords.py -o train:0.8 valid:0.2 --with-label --compress
 
-为每个文件生成 api sequence，并存储为 pickle
-
-```bash
-$ python preprocess_scripts/gen_api_seqs.py
+$ unzip -p ./data/3rd_security_test.zip | python encode_values.py -c api --vocab-file value_mappings.csv \
+    | python to_tfrecords.py -o test --compress
 ```
 
 训练
 
 ```bash
-$ python train.py
+$ python train.py --train-file train.tfrecords.gz  --valid-file valid.tfrecords.gz
 ```
 
 预测
 
 ```bash
-$ python predict.py
+$ python predict.py --test-file test.tfrecords.gz --model-file ./logs/cnn_xxx/cnn_xxx.h5 --submission-file submissions.csv
 ```
 
 ## 后续的一些反思
