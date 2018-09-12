@@ -12,7 +12,7 @@ def read_tfrecord_dataset(path):
 class SampleDecoder(object):
     def __init__(self, with_label=True):
         self.with_label = with_label
-        
+
     def __call__(self, serialized_example):
         features = {
             'file_id': tf.FixedLenFeature([], tf.int64),
@@ -25,7 +25,7 @@ class SampleDecoder(object):
             features['label'] = tf.FixedLenFeature([], tf.int64)
         example = tf.parse_single_example(serialized_example, features=features)
         return example
-    
+
 
 def reweighted_filter(reweighted_ratios):
     def wrapper(example):
@@ -36,7 +36,8 @@ def reweighted_filter(reweighted_ratios):
 def api_one_hot(example):
     indices = tf.stack([example['index'].values, example['api'].values], axis=1)
     sp_vals = tf.ones(example['api_cnt'])
-    ohe = tf.sparse_to_dense(indices, [5001, 311], sp_vals)
+    seq_len = example['seq_len']
+    ohe = tf.sparse_to_dense(indices, [seq_len, 311], sp_vals)
     if 'label' in example:
         return ohe, [example['label']]
     else:
@@ -62,5 +63,6 @@ def make_reweighted_dataset(dataset, batch_size, reweight_ratios_input):
               .filter(reweighted_filter(reweight_ratios_input))
               .map(api_one_hot)
               .shuffle(buffer_size=500)
-              .batch(batch_size))
+              .padded_batch(batch_size, padded_shapes=([None, 311], [None])))
     return dataset
+

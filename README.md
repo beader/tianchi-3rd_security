@@ -2,13 +2,23 @@
 
 [竞赛链接](https://tianchi.aliyun.com/competition/introduction.htm?raceId=231668)
 
-这个版本相对于 [v0.1](https://github.com/beader/3rd_security/tree/v0.1)，训练逻辑和效果不变，但做了一些优化:
+v0.3:
+
+相对于 [v0.2](https://github.com/beader/3rd_security/tree/v0.2)，训练逻辑不变，性能上做了一些优化:
+
+- 使用 tf.data.Dataset.padded_batch，在一个 batch 中对 sequence 进行 padding ，之前是全局做，全部 padding 成长度 5001 的 sequence
+- Input Layer 的 shape 改成 (None, 311)，使之支持 variable length sequence
+- 训练速度可以提升约50%
+
+
+v0.2:
+
+相对于 [v0.1](https://github.com/beader/3rd_security/tree/v0.1)，训练逻辑和效果不变，但做了一些优化:
 
 - 使用 Tensorflow TFRecord 格式存储原始数据
 - 中间步骤的脚本支持管道操作, 具体可以查看脚本的 --help
 - 训练部分使用 TFRecord，训练速度更快，占用内存变少
-
-根目录下增加了一个 simple_baseline.py ，使用了 (1,3)-grams 特征构建随机森林分类器，可以作为一个快速简单的 simple baseline，中间使用了一些处理的小技巧，如果你遇到内存不够之类的问题，可以参考这种写法。
+- 根目录下增加了一个 simple_baseline.py ，使用了 (1,3)-grams 特征构建随机森林分类器，可以作为一个快速简单的 simple baseline，中间使用了一些处理的小技巧，如果你遇到内存不够之类的问题，可以参考这种写法。
 
 ## 背景
 

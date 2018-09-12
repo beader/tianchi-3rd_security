@@ -19,7 +19,6 @@ args = parser.parse_args()
 
 NUM_WORDS = 311
 NUM_CLASSES = 6
-SEQ_LEN = 5001
 LABEL_DIST = [111545, 287, 744, 598, 53, 3397]
 REWEIGHT_RATIO = [0.027, 1, 1, 1, 1, 1]
 
@@ -45,7 +44,7 @@ def train():
     valid_steps_per_epoch = int(np.sum(label_distribution * reweight_ratios) * valid_size / args.batch_size)
 
     model_name = 'cnn_{}'.format(int(time.time()))
-    model = build_cnn_model(NUM_CLASSES, SEQ_LEN, NUM_WORDS, model_name)
+    model = build_cnn_model(NUM_CLASSES, NUM_WORDS, model_name)
     model.compile('adam', 'sparse_categorical_crossentropy', metrics=['acc'])
     log_dir = os.path.join('./logs', model.name)
     model_filename = model.name + '.{epoch:02d}-{val_loss:.4f}.h5'

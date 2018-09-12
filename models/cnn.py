@@ -2,8 +2,8 @@ import tensorflow as tf
 from tensorflow.keras.layers import Input, MaxPool1D, Conv1D, GlobalMaxPool1D, Concatenate, Dense
 
 
-def build_cnn_model(num_classes, seq_len, feat_size, name='cnn'):
-    input_seq = Input(shape=(seq_len, feat_size), dtype='float32')
+def build_cnn_model(num_classes, feat_size, name='cnn'):
+    input_seq = Input(shape=(None, feat_size), dtype='float32')
     x = MaxPool1D(5, strides=2)(input_seq)
 
     conv1 = Conv1D(64, kernel_size=3, strides=1, activation='relu')(x)
