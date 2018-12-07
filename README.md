@@ -211,7 +211,7 @@ word    I like this movie very much !
 
 网络的设计参考了这篇文章 [《Understanding how Convolutional Neural Network (CNN) perform text classification with word embeddings》](http://www.joshuakim.io/understanding-how-convolutional-neural-network-cnn-perform-text-classification-with-word-embeddings/)。
 
-区别在于我在最初的地方加另一个 maxpool
+区别在于我在最初的地方加另一个 maxpool 层
 
 <img src="/imgs/cnn_structure.png" height="400">
 
