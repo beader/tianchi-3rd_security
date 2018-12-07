@@ -151,12 +151,11 @@ f	1003	6
 
 官方说明采用 logloss 计算:
 
-![3](http://orxuqm7p7.bkt.clouddn.com/3.png?imageView2/2/h/60)
+<img src="/imgs/3.png" height="60">
 
 但实际上，logloss 公式应该是:
 
-![4](http://orxuqm7p7.bkt.clouddn.com/2018-08-30-4.png?imageView2/2/h/70)
-
+<img src="/imgs/4.png" height="70">
 
 参考 [fast.ai wiki - logloss](http://wiki.fast.ai/index.php/Log_Loss)
 
@@ -199,11 +198,11 @@ word    I like this movie very much !
 
 对于 text sequence 来说，我们可以用 [One-Hot Encoding](https://en.wikipedia.org/wiki/One-hot) 对词进行编码，变成一个 2D Matrix
 
-![text_ohe](http://orxuqm7p7.bkt.clouddn.com/text_ohe.png?imageView2/2/h/300)
+<img src="/imgs/text_ohe.png" height="300">
 
 相同的，我们可以把 API sequence 也变成 One-Hot Encoding
 
-![api_seq_ohe](http://orxuqm7p7.bkt.clouddn.com/api_seq_ohe.png?imageView2/2/h/300)
+<img src="/imgs/api_seq_ohe.png" height="300">
 
 注: 这种表示方法，忽略了在同一个 index 下，相同 api 被调用多次的情况
 
@@ -214,7 +213,7 @@ word    I like this movie very much !
 
 区别在于我在最初的地方加另一个 maxpool 层
 
-![cnn_structure](http://orxuqm7p7.bkt.clouddn.com/cnn_structure.png?imageView2/2/h/500)
+<img src="/imgs/cnn_structure.png" height="400">
 
 ### 训练过程
 考虑到 class 0 的样本占据了大多数，并且较难的部分其实是 class 1 ~ class 5 之间的分类问题。因此在每一个 epoch 中，我们随机抽取一部分 class 0 的样本，其余 class 保持固定。
